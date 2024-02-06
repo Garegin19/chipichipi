@@ -10,7 +10,7 @@ class BookList(generics.ListCreateAPIView):
     serializer_class = BookSerilizer
     http_method_names = ['get', 'post']
 
-class BookDetail(generics.ListCreateAPIView):
+class BookDetail(generics.RetrieveUpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerilizer
     http_method_names = ['get', 'put']
