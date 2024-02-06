@@ -9,3 +9,8 @@ class BookList(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerilizer
     http_method_names = ['get', 'post']
+
+class BookDetail(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerilizer
+    http_method_names = ['get', 'put']
