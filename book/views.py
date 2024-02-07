@@ -1,7 +1,6 @@
-from rest_framework import generics, request
-from rest_framework.response import Response
+from rest_framework import generics, filters
 from book.models import Book
-from book.serializer import BookSerilizer, GetDateSerializer
+from book.serializer import BookSerilizer, GetDateSerializer, TitleSerializer
 
 class BookList(generics.ListCreateAPIView):
     queryset = Book.objects.all()
@@ -19,6 +18,23 @@ class GetDate(generics.ListAPIView):
 class GetDateForBook(generics.RetrieveUpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = GetDateSerializer
+
+class SearchBook(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = TitleSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
+
+# class OrderDate(generics.ListAPIView):
+#     queryset = Book.objects.all()
+#     serializer_class = GetDateSerializer
+#     filter_backends = [filters.OrderingFilter]
+#     ordering_fields = ['date']
+
+class OrderDate(generics.ListAPIView):
+    queryset = Book.objects.all().order_by('-date')
+    serializer_class = GetDateSerializer
+    ordering_fields = ['date']
 
 
 

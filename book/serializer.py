@@ -12,3 +12,10 @@ class GetDateSerializer(serializers.ModelSerializer):
         model = Book
         fields = ['date']
 
+class TitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['title']
+
+
+
