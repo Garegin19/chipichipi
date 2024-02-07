@@ -6,3 +6,9 @@ class BookSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = '__all__'
+
+class GetDateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['date']
+
