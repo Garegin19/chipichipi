@@ -7,5 +7,6 @@ urlpatterns = [
     path('book/<int:pk>/date', views.GetDateForBook.as_view()),
     path('book/dates', views.GetDate.as_view()),
     path('book/search', views.SearchBook.as_view()),
-    path('book/order', views.OrderDate.as_view())
+    path('book/order', views.OrderDate.as_view()),
+    path('book/finding', views.SearchDate.as_view()),
 ]

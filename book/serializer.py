@@ -17,5 +17,11 @@ class TitleSerializer(serializers.ModelSerializer):
         model = Book
         fields = ['title']
 
+class DateTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['title', 'date']
+
+
 
 
