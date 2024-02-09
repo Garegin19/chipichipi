@@ -1,6 +1,7 @@
 from django.db import models
 from .uppercase import uppercase
 
+
 # Create your models here.
 class Book(models.Model):
     title = models.CharField(max_length=64, unique=True, null=True, blank=True, validators=[uppercase])
@@ -13,3 +14,5 @@ class Book(models.Model):
         if not self.title.endswith('.'):
             self.title += '.'
         super().save(*args, **kwargs)
+
+
