@@ -5,22 +5,25 @@ from book.models import Book
 class BookSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = ['id', 'title', 'author', 'genre', 'date']
 
-class GetDateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Book
-        fields = ['date']
+# class TitleSerializer(serializers.Serializer):
+#     title = serializers.CharField(validators=[uppercase])
 
-class TitleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Book
-        fields = ['title']
-
-class DateTitleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Book
-        fields = ['title', 'date']
+# class GetDateSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Book
+#         fields = ['date']
+#
+# class TitleSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Book
+#         fields = ['title']
+#
+# class DateTitleSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Book
+#         fields = ['title', 'date']
 
 
 
