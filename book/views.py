@@ -13,9 +13,6 @@ class BookList(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         ordering = self.request.query_params.get('ordering', 'date')
-        serialized_data = OrderingSerializer(data=self.request.query_params)
-        serialized_data.is_valid(raise_exception=True)
-        validated_data = serialized_data.validated_data
         return queryset.order_by(ordering)
 
 

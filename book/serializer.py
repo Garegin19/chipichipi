@@ -8,6 +8,12 @@ class BookSerilizer(serializers.ModelSerializer):
         model = Book
         fields = ['id', 'title', 'author', 'genre', 'date']
 
+    def create(self, validated_data):
+        title = validated_data['title'] + '.'
+        validated_data['title'] = title
+        book = Book.objects.create(**validated_data)
+        return book
+
 
 CHOICES = (
     ("title", "title"),
