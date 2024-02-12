@@ -1,12 +1,16 @@
 from rest_framework import serializers
 from book.models import Book
-import re
-from django.core.exceptions import ValidationError
+
 
 class BookSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ['id', 'title', 'author', 'genre', 'date']
+
+    def validate_title(self, value):
+        if not value[0].isupper():
+            raise serializers.ValidationError("Введите название с заглавной буквы!")
+        return value
 
     def create(self, validated_data):
         title = validated_data['title'] + '.'

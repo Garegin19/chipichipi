@@ -1,6 +1,6 @@
 from rest_framework import generics, filters
 from book.models import Book
-from book.serializer import BookSerilizer, OrderingSerializer
+from book.serializer import BookSerilizer
 
 
 class BookList(generics.ListCreateAPIView):
