@@ -1,4 +1,6 @@
 from django.db import models
+from simple_history.models import HistoricalChanges
+
 
 class BookStatus(models.TextChoices):
     PENDING = 'Pending', 'P'
@@ -11,5 +13,7 @@ class Book(models.Model):
     genre = models.CharField(max_length=64, null=True, blank=True, default='Жанр')
     date = models.DateTimeField(auto_now_add=True, null=True, db_index=True)
     status = models.CharField(max_length=16, choices=BookStatus.choices, default=BookStatus.UNREAD)
+    history = HistoricalChanges()
+
     def __str__(self):
         return self.title
