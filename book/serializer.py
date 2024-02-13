@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from book.models import Book
+import re
 
 
 class BookSerilizer(serializers.ModelSerializer):
@@ -10,6 +11,8 @@ class BookSerilizer(serializers.ModelSerializer):
     def validate_title(self, value):
         if not value[0].isupper():
             raise serializers.ValidationError("Введите название с заглавной буквы!")
+        if re.search(r'[\d\W]', value):
+            raise serializers.ValidationError("Введите корректное название книги!")
         return value
 
     def create(self, validated_data):
