@@ -7,17 +7,16 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Book',
+            name="Book",
             fields=[
-                ('book_id', models.AutoField(primary_key=True, serialize=False)),
-                ('title', models.CharField(blank=True, max_length=128, null=True)),
-                ('author', models.CharField(blank=True, max_length=128, null=True)),
-                ('genre', models.CharField(blank=True, max_length=64, null=True)),
+                ("book_id", models.AutoField(primary_key=True, serialize=False)),
+                ("title", models.CharField(blank=True, max_length=128, null=True)),
+                ("author", models.CharField(blank=True, max_length=128, null=True)),
+                ("genre", models.CharField(blank=True, max_length=64, null=True)),
             ],
         ),
     ]
