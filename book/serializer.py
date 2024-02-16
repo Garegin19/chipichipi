@@ -1,6 +1,13 @@
 from rest_framework import serializers
-from book.models import Book, BookHistory
+from book.models import Book, BookHistory, StatusChoices
 import re
+
+
+class StatusChoicesField(serializers.ChoiceField):
+    def to_internal_value(self, data):
+        if isinstance(data, str):
+            return dict(StatusChoices.choices)[data]
+        return super().to_internal_value(data)
 
 
 class HistorySerializer(serializers.ModelSerializer):
@@ -11,6 +18,7 @@ class HistorySerializer(serializers.ModelSerializer):
 
 class BookSerilizer(serializers.ModelSerializer):
     status = HistorySerializer(many=True)
+    status = StatusChoicesField(choices=StatusChoices.choices)
     def validate_title(self, value):
         if not value[0].isupper():
             raise serializers.ValidationError("Введите название с заглавной буквы!")

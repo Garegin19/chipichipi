@@ -1,12 +1,13 @@
 from django.db import models
 
 
+class StatusChoices(models.TextChoices):
+        NOTREAD = 'Not read', 'NR'
+        READ = 'Read', 'R'
+        PENDING = 'Pending', 'P'
+
 class BookHistory(models.Model):
-    status = models.CharField(max_length=16, choices=(
-        ('READ', 'R'),
-        ('UNREAD', 'N'),
-        ('PENDING', 'P')
-    ))
+    status = models.CharField(max_length=16, choices=StatusChoices.choices, default=StatusChoices.NOTREAD)
     changed_at = models.DateTimeField(auto_now=True)
 
 class Book(models.Model):
