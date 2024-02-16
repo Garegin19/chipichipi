@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "bookapp",
     "book",
-    "simple_history",
     "rest_framework",
 ]
 
