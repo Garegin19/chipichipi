@@ -15,13 +15,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+import logging
+
 from django.contrib import admin
 from django.urls import path, include
-import book.views
-from book import views
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+debugger = logging.getLogger('debug')
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Garegin API",
+        default_version="v1",
+        description="API для ION 2.0",
+        contact=openapi.Contact(email="Garegin@gmail.com"),
+    ),
+    public=True,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
     path("", include("book.urls")),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
 ]
