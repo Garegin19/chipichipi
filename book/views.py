@@ -23,19 +23,28 @@ class BookDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookSerializer
 
 
-# class HistoryList(generics.ListAPIView):
-#     queryset = BookHistory.objects.all()
-#     serializer_class = HistorySerializer
-#
-#     def get_queryset(self):
-#         book_id = get_object_or_404(Book, pk=self.kwargs['pk'])
-#         return BookHistory.objects.filter(title=book_id.title).order_by('changed_at')
-
-class BookHistoryViewSet(viewsets.ReadOnlyModelViewSet):
+class HistoryList(generics.ListAPIView):
     queryset = BookHistory.objects.all()
     serializer_class = HistorySerializer
 
     def get_queryset(self):
-        book_id = self.kwargs['pk']
-        book = get_object_or_404(Book, pk=book_id)
-        return BookHistory.objects.filter(title=book.title).order_by('changed_at')
+        serializer = self.get_serializer_class()
+        pk = self.kwargs.get('pk', 0)
+        book_history = get_object_or_404(Book, pk=self.kwargs['pk'])
+        validated_data = serializer(instance=book_history, many=True)
+        return BookHistory.objects.filter(status='status').order_by('-changed_at')
+
+
+    # def get(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer_class()
+    #
+    #     pk = self.kwargs.get('pk', 0)
+    #     book = get_object_or_404(Book, pk=pk)
+    #
+    #     book_history = BookHistory.objects.filter(status='status').order_by('-changed_at')
+    #     validated_data = serializer(instance=book_history, many=True)
+    #
+    #     return Response(data=validated_data.data)
+
+
+

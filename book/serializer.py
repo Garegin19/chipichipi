@@ -22,15 +22,6 @@ class BookSerializer(serializers.ModelSerializer):
         validated_data["title"] += "."
         book = Book.objects.create(**validated_data)
         return book
-
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get("title", instance.title)
-        instance.author = validated_data.get("author", instance.author)
-        instance.genre = validated_data.get("genre", instance.genre)
-        instance.status = validated_data.get("status", instance.status)
-        instance.save()
-        return instance
-
     class Meta:
         model = Book
         fields = ["id", "title", "author", "genre", "date", "status"]
