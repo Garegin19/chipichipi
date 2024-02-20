@@ -2,9 +2,9 @@ from django.db import models
 
 
 class StatusChoices(models.TextChoices):
-    NOT_READ = ('Not read', 'NR')
-    READ = ('Read', 'R')
-    PENDING = ('Pending', 'P')
+    NOT_READ = 'Not read', 'NR'
+    READ = 'Read', 'R'
+    PENDING = 'Pending', 'P'
 
 
 class BookHistory(models.Model):
