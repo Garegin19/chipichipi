@@ -3,12 +3,6 @@ from rest_framework import serializers
 from book.models import Book, BookHistory
 
 
-class HistorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BookHistory
-        fields = ["id", "title", "status", "changed_at"]
-
-
 class BookSerializer(serializers.ModelSerializer):
 
     def validate_title(self, value):
@@ -22,6 +16,21 @@ class BookSerializer(serializers.ModelSerializer):
         validated_data["title"] += "."
         book = Book.objects.create(**validated_data)
         return book
+
+    def update(self, instance, validated_data):
+        status = validated_data.get('status')
+        instance = super().update(instance, validated_data)
+        if status == 'Read':
+            BookHistory.objects.create(book=instance)
+        return instance
     class Meta:
         model = Book
         fields = ["id", "title", "author", "genre", "date", "status"]
+
+class HistorySerializer(serializers.ModelSerializer):
+#     status = serializers.CharField(source='formatted_status')
+    book = BookSerializer
+    class Meta:
+        model = BookHistory
+        fields = ["id", "book", "changed_at"]
+

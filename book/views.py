@@ -1,3 +1,4 @@
+from django.http import Http404
 from rest_framework import generics, filters, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -23,28 +24,28 @@ class BookDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookSerializer
 
 
-class HistoryList(generics.ListAPIView):
+class HistoryList(generics.ListCreateAPIView):
     queryset = BookHistory.objects.all()
     serializer_class = HistorySerializer
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     book_id = self.kwargs.get('pk', 0)
+    #     if book_id is not None:
+    #         queryset = queryset.filter(book_id=book_id)
+    #         print(queryset)
+    #     return queryset
+    def get_book(self) -> Book:
+        if not self.kwargs.get('pk'):
+            raise Http404
+
+        book = get_object_or_404(Book, pk=self.kwargs['pk'])
+        return book
+
 
     def get_queryset(self):
-        serializer = self.get_serializer_class()
-        pk = self.kwargs.get('pk', 0)
-        book_history = get_object_or_404(Book, pk=self.kwargs['pk'])
-        validated_data = serializer(instance=book_history, many=True)
-        return BookHistory.objects.filter(status='status').order_by('-changed_at')
+        pk = self.kwargs.get('pk')
+        return BookHistory.objects.filter(book_id=pk).order_by('-changed_at')
 
-
-    # def get(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer_class()
-    #
-    #     pk = self.kwargs.get('pk', 0)
-    #     book = get_object_or_404(Book, pk=pk)
-    #
-    #     book_history = BookHistory.objects.filter(status='status').order_by('-changed_at')
-    #     validated_data = serializer(instance=book_history, many=True)
-    #
-    #     return Response(data=validated_data.data)
 
 
 
