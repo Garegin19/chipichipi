@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class StatusChoices(models.TextChoices):
     NOT_READ = 'Not read', 'NR'
     READ = 'Read', 'R'
@@ -25,9 +24,4 @@ class Book(models.Model):
 
 class BookHistory(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    # title = models.CharField(max_length=64, null=True, blank=True)
-    # status = models.CharField(max_length=16, choices=StatusChoices.choices, default=StatusChoices.NOT_READ)
     changed_at = models.DateTimeField(auto_now=True)
-
-    # def __str__(self):
-    #     return dict(self.STATUS_CHOICES).get(self.status)
