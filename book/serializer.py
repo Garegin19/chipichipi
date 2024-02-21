@@ -18,11 +18,18 @@ class BookSerializer(serializers.ModelSerializer):
         return book
 
     def update(self, instance, validated_data):
-        status = validated_data.get('status')
-        instance = super().update(instance, validated_data)
-        if status == 'Read':
+        # status = validated_data.get('status')
+        # instance = super().update(instance, validated_data)
+        # if status == 'Read':
+        #     BookHistory.objects.create(book=instance)
+        # return instance
+        pre_status = instance.status
+        instance.status = super().update(instance, validated_data)
+        status = validated_data.get("status")
+        if status != pre_status:
             BookHistory.objects.create(book=instance)
         return instance
+
     class Meta:
         model = Book
         fields = ["id", "title", "author", "genre", "date", "status"]
