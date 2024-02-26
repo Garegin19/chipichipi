@@ -24,4 +24,10 @@ class Book(models.Model):
 
 class BookHistory(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    status = models.CharField(max_length=16, null=True, blank=True, choices=StatusChoices)
     changed_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.status = self.book.status
+        super().save(*args, **kwargs)
+

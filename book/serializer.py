@@ -19,10 +19,8 @@ class BookSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         pre_status = instance.status
         instance.status = validated_data.get("status")
+        BookHistory.objects.create(book=instance, status=pre_status)
         instance.save()
-        status = validated_data.get("status")
-        if status != pre_status:
-            BookHistory.objects.create(book=instance, status=status)
         return instance
 
     def to_representation(self, instance):
@@ -35,16 +33,16 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class HistorySerializer(serializers.ModelSerializer):
-    book = BookSerializer
-    title = serializers.StringRelatedField(source="book.title")
-    status = serializers.CharField(source="book.status")
+    title = serializers.CharField(source="book.title")
+
     def to_representation(self, instance):
         res = super().to_representation(instance)
         res["changed_at"] = instance.changed_at.strftime("%d.%m.%Y %H:%M:%S")
-        res["status"] = instance.book.status
         return res
     class Meta:
         model = BookHistory
         fields = ["book", "title", "changed_at", "status"]
         many = True
+
+
 
