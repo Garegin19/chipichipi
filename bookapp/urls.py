@@ -16,12 +16,16 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.template.context_processors import static
 from django.urls import path, include
-import book.views
-from book import views
+from bookapp import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
     path("", include("book.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL)
+

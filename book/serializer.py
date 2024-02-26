@@ -3,6 +3,7 @@ from rest_framework import serializers
 from book.models import Book, BookHistory
 
 class BookSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(max_length=None, use_url=True)
     def validate_title(self, value):
         if not value[0].isupper():
             raise serializers.ValidationError("Введите название с заглавной буквы!")
@@ -29,7 +30,7 @@ class BookSerializer(serializers.ModelSerializer):
         return res
     class Meta:
         model = Book
-        fields = ["id", "title", "author", "genre", "date", "status"]
+        fields = ["id", "title", "image", "author", "genre", "date", "status"]
 
 
 class HistorySerializer(serializers.ModelSerializer):

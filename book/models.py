@@ -8,6 +8,7 @@ class StatusChoices(models.TextChoices):
 
 class Book(models.Model):
     title = models.CharField(max_length=64, unique=True, null=True, blank=True, db_index=True)
+    image = models.ImageField(upload_to='images')
     author = models.CharField(max_length=128, null=True, blank=True)
     genre = models.CharField(max_length=64, null=True, blank=True, default="Жанр")
     date = models.DateTimeField(auto_now_add=True, null=True, db_index=True)
