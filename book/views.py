@@ -1,7 +1,6 @@
 from django.http import Http404
 from rest_framework import generics, filters
 from rest_framework.generics import get_object_or_404
-
 from book.models import Book, BookHistory
 from book.serializer import BookSerializer, HistorySerializer
 
